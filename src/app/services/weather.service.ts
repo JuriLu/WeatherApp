@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
 import {environment} from "../../environments/environment";
-import {WeatherData} from "../models/weather.model";
+import {WeatherModel} from "../models/weather.model";
 import {Observable} from "rxjs";
 
 @Injectable({
@@ -12,17 +12,15 @@ export class WeatherService {
   constructor(private http: HttpClient) {
   }
 
-  getWeatherData(cityName: string):Observable<WeatherData> {
-    return this.http.get<WeatherData>(`${environment.weatherApiBaseUrl}`,
+  getWeatherData(cityName: string):Observable<WeatherModel> {
+    return this.http.get<WeatherModel>(`${environment.weatherApiBaseUrl}`,
       {
         headers: new HttpHeaders()
-          .set(environment.XRapidAPIHostHeaderName, environment.XRapidAPIHostHeaderValue)
-          .set(environment.XRapidAPIKeyHeaderName, environment.XRapidAPIKeyHeaderValue),
+          .set(environment.X_RAPID_API_KEY_NAME, environment.X_RAPID_API_KEY_VALUE)
+          .set(environment.X_RAPID_API_HOST_NAME, environment.X_RAPID_API_HOST_VALUE),
 
         params: new HttpParams()
           .set('q', cityName)
-          .set('units','metric')
-          .set('mode','json')
       }
     )
   }
